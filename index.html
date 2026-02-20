@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>ly云手机 | 自定义背景版</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-text: #e0e0e0;
+      --color-meta: #999;
+      --color-accent: #c0b283;
+      --font-main: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    body {
+      font-family: var(--font-main);
+      color: var(--color-text);
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+      background-attachment: fixed;
+    }
+    .page-container { height: 100%; position: relative; }
+    .section {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      justify-content: flex-start; align-items: center;
+      padding: 60px 16px 30px;
+      overflow-y: auto;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.8s ease, visibility 0.8s;
+      background: #000;
+    }
+    .section.active { opacity: 1; visibility: visible; }
+    
+    .title-bar {
+      position: absolute; top: 0; left: 0; width: 100%;
+      padding: 18px 20px; display: flex; align-items: center;
+      justify-content: center; background: transparent; color: var(--color-text);
+      letter-spacing: 2px;
+    }
+    .title-bar .icon {
+      width: 22px; height: 22px; margin-right: 10px;
+      fill: var(--color-accent);
+    }
+    .title-bar .title-text {
+      font-size: 1.2rem; font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    .content {
+      width: 100%;
+      max-width: 420px;
+      margin-top: 70px;
+    }
+
+    .notice {
+      background: rgba(255,255,255,0.03);
+      border-left: 2px solid var(--color-accent);
+      padding: 14px 16px; font-size: 0.95rem; line-height: 1.6;
+      opacity: 0.9;
+    }
+    .notice ol { margin: 10px 0 0 1.2em; }
+    .notice li { margin-bottom: 6px; }
+
+    .button-link {
+      display: inline-block; margin-top: 20px;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, #d8d8d8, #3a3a3a);
+      color: #000; text-decoration: none; border-radius: 2px;
+      font-size: 0.9rem; font-weight: 500;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      transition: all 0.3s ease;
+    }
+    .button-link:hover {
+      background: linear-gradient(135deg, #fff, #d8d8d8);
+      box-shadow: 0 4px 10px rgba(192,178,131,0.3);
+      transform: translateY(-1px);
+    }
+
+    .wave-underline {
+      display: block; width: 100%; height: 4px; margin-top: 10px;
+    }
+    .wave-underline svg {
+      width: 100%; height: 100%; display: block;
+    }
+
+    .metal-btn {
+      display: inline-flex; justify-content: center; align-items: center;
+      width: 38px; height: 38px;
+      background: linear-gradient(145deg, #3a3a3a, #1a1a1a);
+      color: var(--color-text); text-decoration: none; border-radius: 50%;
+      font-size: 0.75rem; font-weight: 500;
+      border: 1px solid #444;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+      transition: all 0.3s ease; margin: 4px; cursor: pointer;
+    }
+    .metal-btn:hover {
+      background: linear-gradient(145deg, #4a4a4a, #222);
+      border-color: var(--color-accent);
+      transform: translateY(-2px);
+    }
+
+    .compact-nav {
+      display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px;
+    }
+    .nav-group {
+      display: flex; flex-direction: column; align-items: center;
+      width: calc(25% - 10px);
+    }
+    .nav-label {
+      font-size: 0.72rem; font-weight: 500; color: var(--color-meta);
+      margin-bottom: 6px; text-align: center;
+      letter-spacing: 1px;
+    }
+    .nav-buttons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+
+    .func-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px; padding: 14px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .func-card-title {
+      font-size: 0.95rem; font-weight: 500;
+      margin-bottom: 8px; color: var(--color-text);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 6px;
+      letter-spacing: 1px;
+    }
+    .func-card-content { font-size: 0.88rem; }
+
+    .calc input {
+      width: 100%; padding: 10px; margin-bottom: 10px;
+      font-size: 1rem; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 2px;
+      color: var(--color-text);
+    }
+    .calc .buttons { display: flex; gap: 10px; margin-bottom: 10px; }
+    .calc button {
+      flex: 1; padding: 10px; font-size: 1.1rem;
+      background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
+      color: var(--color-text); border: 1px solid #444; border-radius: 2px; cursor: pointer;
+    }
+    .calc p { text-align: center; font-size: 1rem; }
+
+    .countdown-input { display: flex; gap: 8px; margin-bottom: 8px; }
+    .countdown-input input {
+      flex: 1; padding: 8px; font-size: 0.9rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 2px;
+      color: var(--color-text);
+    }
+    .countdown-display {
+      text-align: center; font-size: 1.1rem; font-weight: 500;
+    }
+
+    .note-input {
+      width: 100%; height: 60px; padding: 8px;
+      font-size: 0.9rem; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 2px;
+      color: var(--color-text); resize: none;
+    }
+    .note-save {
+      margin-top: 8px; padding: 6px 12px; font-size: 0.88rem;
+      background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
+      color: var(--color-text); border: 1px solid #444; border-radius: 2px; cursor: pointer;
+    }
+    .note-content {
+      margin-top: 8px; font-size: 0.88rem; white-space: pre-wrap;
+    }
+
+    .reserved-widget {
+      text-align: center; color: var(--color-meta); font-size: 0.88rem;
+    }
+
+    .clock-weather {
+      display: flex; flex-direction: row; gap: 10px;
+    }
+    .clock-weather > div {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .clock-weather .small-title {
+      font-size: 0.75rem; color: var(--color-meta); margin-bottom: 4px;
+    }
+    #clock { font-size: 1.2rem; font-weight: 500; }
+    .weather-display {
+      font-size: 0.88rem; text-align: center;
+    }
+
+    .schedule-list-wrapper {
+      max-height: 160px; overflow-y: auto; padding-right: 4px;
+    }
+    .schedule-list { list-style: none; padding-left: 0; }
+    .schedule-list li {
+      display: flex; flex-direction: column;
+      padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.88rem;
+    }
+    .schedule-time {
+      color: var(--color-meta); font-size: 0.76rem;
+      margin-bottom: 4px;
+    }
+    .schedule-text { word-break: break-word; }
+    .schedule-delete {
+      margin-top: 6px; color: #c0392b; background: none; border: none;
+      font-size: 0.82rem; cursor: pointer; text-align: right;
+    }
+
+    .schedule-inputs {
+      display: flex; flex-direction: column; gap: 8px;
+      margin-bottom: 10px;
+    }
+    .schedule-inputs input[type="datetime-local"],
+    .schedule-inputs input[type="text"] {
+      width: 100%; padding: 8px; font-size: 0.85rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 2px;
+      color: var(--color-text);
+    }
+    .schedule-add-btn {
+      padding: 8px; font-size: 0.9rem;
+      background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
+      color: var(--color-text); border: 1px solid #444; border-radius: 2px; cursor: pointer;
+    }
+
+    .extended-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+      width: 100%;
+    }
+    .ext-feature {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px; padding: 10px;
+    }
+    .ext-feature h4 { font-size: 0.9rem; margin-bottom: 6px; }
+    .ext-feature p { font-size: 0.78rem; color: var(--color-meta); }
+    .ext-feature .tool-area {
+      margin-top: 10px;
+      padding: 10px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 4px;
+      font-size: 0.82rem;
+    }
+
+    .nav-dots {
+      position: fixed; right: 10px; top: 50%;
+      transform: translateY(-50%); display: flex;
+      flex-direction: column; gap: 10px; z-index: 100;
+    }
+    .dot {
+      width: 6px; height: 6px; background: var(--color-meta);
+      opacity: 0.4; border-radius: 50%; cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .dot.active { opacity: 1; transform: scale(1.3); background: var(--color-accent); }
+  </style>
+</head>
+<body>
+  <div class="page-container">
+    <!-- 1. 云手机说明 -->
+    <div class="section active" id="section1">
+      <div class="title-bar">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/></svg>
+        <span class="title-text">Ly 云手机</span>
+      </div>
+      <div class="content">
+        <div class="notice">
+          <p>此网页为腾讯文档网页版，用于管理云手机使用状态。</p>
+          <div class="wave-underline">
+            <svg viewBox="0 0 100 6" preserveAspectRatio="none">
+              <path fill="none" stroke="var(--color-accent)" stroke-width="1" d="M0,3 Q25,5 50,3 T100,3"/>
+            </svg>
+          </div>
+          <p>操作说明：</p>
+          <div class="wave-underline">
+            <svg viewBox="0 0 100 6" preserveAspectRatio="none">
+              <path fill="none" stroke="var(--color-accent)" stroke-width="1" d="M0,3 Q25,1 50,3 T100,3"/>
+            </svg>
+          </div>
+          <ol>
+            <li>复制 ToDesk 伙伴识别码及验证码</li>
+            <li>在 ToDesk 客户端中远程打开设备</li>
+            <li>在腾讯文档中更新为“正在使用”状态</li>
+          </ol>
+        </div>
+        <a class="button-link" href="https://docs.qq.com/sheet/DYUNMc2ZUbkJac29z?tab=BB08J2" target="_blank">查看 / 更新云手机状态</a>
+        <div class="wave-underline">
+          <svg viewBox="0 0 100 6" preserveAspectRatio="none">
+            <path fill="none" stroke="var(--color-accent)" stroke-width="1" d="M0,3 Q25,5 50,3 T100,3"/>
+          </svg>
+        </div>
+        <a class="button-link" href="https://www.todesk.com/download.html" target="_blank">下载 ToDesk</a>
+      </div>
+    </div>
+
+    <!-- 2. 网址导航 + 计算器 -->
+    <div class="section" id="section2">
+      <div class="title-bar">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/></svg>
+        <span class="title-text">Ly 云手机</span>
+      </div>
+      <div class="content">
+        <h2 class="half-title" style="font-weight:400;letter-spacing:1px;margin-bottom:12px;">网址导航</h2>
+        <div class="wave-underline">
+          <svg viewBox="0 0 100 6" preserveAspectRatio="none">
+            <path fill="none" stroke="var(--color-accent)" stroke-width="1" d="M0,3 Q25,5 50,3 T100,3"/>
+          </svg>
+        </div>
+        <div class="compact-nav">
+          <div class="nav-group">
+            <div class="nav-label">微软服务</div>
+            <div class="nav-buttons">
+              <a class="metal-btn" href="https://www.microsoft.com/zh-cn/software-download/windows11" target="_blank">11</a>
+              <a class="metal-btn" href="https://www.microsoft.com/zh-cn/software-download/windows10" target="_blank">10</a>
+              <a class="metal-btn" href="https://www.microsoft.com/zh-cn/software-download/windows8ISO" target="_blank">8.1</a>
+              <a class="metal-btn" href="https://www.microsoft.com/zh-cn/software-download/windows8" target="_blank">8</a>
+              <a class="metal-btn" href="https://www.microsoft.com/zh-cn/software-download/windows7" target="_blank">7</a>
+            </div>
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">装机必备</div>
+            <div class="nav-buttons">
+              <a class="metal-btn" href="https://weixin.qq.com/" target="_blank">微</a>
+              <a class="metal-btn" href="https://im.qq.com/" target="_blank">Q</a>
+              <a class="metal-btn" href="https://browser.360.cn/se/" target="_blank">360</a>
+              <!-- 修改点：将向日葵的链接替换为ToDesk的下载链接 -->
+              <a class="metal-btn" href="https://www.todesk.com/download.html" target="_blank">向</a>
+            </div>
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">装机专用</div>
+            <div class="nav-buttons">
+              <a class="metal-btn" href="https://rufus.ie/zh/" target="_blank">Ruf</a>
+              <a class="metal-btn" href="https://www.diskgenius.cn/" target="_blank">DG</a>
+              <a class="metal-btn" href="https://www.winntsetup.com/" target="_blank">WNT</a>
+            </div>
+          </div>
+          <div class="nav-group">
+            <div class="nav-label">搜索视频</div>
+            <div class="nav-buttons">
+              <a class="metal-btn" href="https://www.baidu.com" target="_blank">百</a>
+              <a class="metal-btn" href="https://www.bilibili.com" target="_blank">B站</a>
+            </div>
+          </div>
+        </div>
+        <div class="wave-underline">
+          <svg viewBox="0 0 100 6" preserveAspectRatio="none">
+            <path fill="none" stroke="var(--color-accent)" stroke-width="1" d="M0,3 Q25,5 50,3 T100,3"/>
+          </svg>
+        </div>
+        <div class="func-card">
+          <div class="func-card-title">🧮 计算器</div>
+          <div class="func-card-content">
+            <div class="calc">
+              <input type="number" id="num1" placeholder="数字1">
+              <input type="number" id="num2" placeholder="数字2">
+              <div class="buttons">
+                <button onclick="calc('+')">+</button>
+                <button onclick="calc('-')">−</button>
+                <button onclick="calc('*')">×</button>
+                <button onclick="calc('/')">÷</button>
+              </div>
+              <p>结果：<span id="calcResult">-</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 时钟 + 天气 + 工作清单 -->
+    <div class="section" id="section3">
+      <div class="title-bar">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/></svg>
+        <span class="title-text">功能区</span>
+      </div>
+      <div class="content">
+        <div class="func-card">
+          <div class="func-card-title">🕒 时钟 & 🌤️ 天气</div>
+          <div class="func-card-content clock-weather">
+            <div>
+              <span class="small-title">时间</span>
+              <div id="clock">--:--:--</div>
+            </div>
+            <div>
+              <span class="small-title">天气</span>
+              <div class="weather-display" id="weatherDisplay">暂无天气数据</div>
+            </div>
+          </div>
+        </div>
+        <div class="func-card">
+          <div class="func-card-title">📝 工作清单</div>
+          <div class="func-card-content">
+            <div class="schedule-inputs" id="scheduleInputs">
+              <input type="datetime-local" class="schedule-time-input">
+              <input type="text" class="schedule-text-input" placeholder="任务内容">
+              <button class="schedule-add-btn" onclick="addScheduleFromInputs()">添加</button>
+            </div>
+            <div class="schedule-list-wrapper">
+              <ul class="schedule-list" id="scheduleList"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. 倒计时 + 笔记 + 预留 -->
+    <div class="section" id="section4">
+      <div class="title-bar">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/></svg>
+        <span class="title-text">功能区</span>
+      </div>
+      <div class="content">
+        <div class="func-card">
+          <div class="func-card-title">⏳ 倒计时</div>
+          <div class="func-card-content">
+            <div class="countdown-input">
+              <input type="date" id="targetDate">
+            </div>
+            <div class="countdown-display" id="countdownDisplay">0 天</div>
+          </div>
+        </div>
+        <div class="func-card">
+          <div class="func-card-title">📒 笔记</div>
+          <div class="func-card-content">
+            <textarea class="note-input" id="noteInput" placeholder="写点什么..."></textarea>
+            <button class="note-save" onclick="saveNote()">保存</button>
+            <div class="note-content" id="noteContent"></div>
+          </div>
+        </div>
+        <div class="func-card">
+          <div class="func-card-title">🔲 预留</div>
+          <div class="func-card-content reserved-widget">未来扩展</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. 扩展功能区 -->
+    <div class="section" id="section5">
+      <div class="title-bar">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/></svg>
+        <span class="title-text">扩展功能区</span>
+      </div>
+      <div class="content">
+        <div class="extended-grid" id="extendedGrid5">
+          <div class="ext-feature" data-tool="scientific-calc">
+            <h4>🔬 科学计算器</h4>
+            <p>支持三角函数、对数、指数等运算</p>
+            <div class="tool-area" id="sciCalcArea">
+              <input type="text" id="sciExpr" placeholder="例: sin(30)+log(100)" style="width:100%;padding:6px;margin-bottom:6px;">
+              <button onclick="runSciCalc()" style="width:100%;padding:6px;">计算</button>
+              <div id="sciResult" style="margin-top:6px;text-align:center;"></div>
+            </div>
+          </div>
+          <div class="ext-feature" data-tool="eyedropper">
+            <h4>🎨 颜色拾取器</h4>
+            <p>屏幕取色与调色板管理</p>
+            <div class="tool-area" id="eyedropperArea">
+              <button onclick="startPickColor()" style="width:100%;padding:6px;">取色</button>
+              <div id="pickedColor" style="margin-top:6px;text-align:center;"></div>
+            </div>
+          </div>
+          <div class="ext-feature" data-tool="tech-tools">
+            <h4>🛠 技术工具集</h4>
+            <p>IP查询、Base64编解码、JSON格式化</p>
+            <div class="tool-area" id="techToolsArea">
+              <button onclick="showTechToolMenu()" style="width:100%;padding:6px;">打开工具菜单</button>
+              <div id="techToolOutput" style="margin-top:6px;font-size:0.78rem;"></div>
+            </div>
+          </div>
+          <div class="ext-feature" data-tool="camera-test">
+            <h4>📷 相机测试模式</h4>
+            <p>检测摄像头分辨率与帧率</p>
+            <div class="tool-area" id="cameraArea">
+              <button onclick="startCameraTest()" style="width:100%;padding:6px;">打开摄像头</button>
+              <video id="camVideo" autoplay playsinline muted style="width:100%;margin-top:6px;display:none;"></video>
+              <div id="camInfo" style="margin-top:6px;text-align:center;font-size:0.78rem;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 右侧导航点容器 -->
+  <div class="nav-dots" id="navDots"></div>
+
+  <script>
+    const basePages = 5;
+    let totalPages = basePages;
+    let currentIndex = 0;
+
+    const sectionsContainer = document.querySelector('.page-container');
+    const navDotsContainer = document.getElementById('navDots');
+
+    function initNavDots() {
+      navDotsContainer.innerHTML = '';
+      for (let i = 0; i < totalPages; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === currentIndex ? ' active' : '');
+        dot.onclick = () => goToSection(i);
+        navDotsContainer.appendChild(dot);
+      }
+    }
+
+    function goToSection(index) {
+      if (index < 0 || index >= totalPages) return;
+      document.querySelectorAll('.section').forEach((sec, i) => {
+        sec.classList.toggle('active', i === index);
+      });
+      document.querySelectorAll('.dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+      currentIndex = index;
+    }
+
+    let isScrolling = false;
+    window.addEventListener('wheel', e => {
+      if (isScrolling) return;
+      isScrolling = true;
+      if (e.deltaY > 0) goToSection(currentIndex + 1);
+      else goToSection(currentIndex - 1);
+      setTimeout(() => isScrolling = false, 800);
+    });
+
+    let touchStartY = 0;
+    window.addEventListener('touchstart', e => touchStartY = e.touches[0].clientY);
+    window.addEventListener('touchend', e => {
+      const touchEndY = e.changedTouches[0].clientY;
+      if (touchStartY - touchEndY > 50) goToSection(currentIndex + 1);
+      else if (touchEndY - touchStartY > 50) goToSection(currentIndex - 1);
+    });
+
+    function calc(op) {
+      const n1 = parseFloat(document.getElementById('num1').value);
+      const n2 = parseFloat(document.getElementById('num2').value);
+      let res;
+      if (isNaN(n1) || isNaN(n2)) res = '请输入有效数字';
+      else {
+        switch(op) {
+          case '+': res = n1 + n2; break;
+          case '-': res = n1 - n2; break;
+          case '*': res = n1 * n2; break;
+          case '/': res = n2 !== 0 ? (n1 / n2).toFixed(2) : '除数不能为0'; break;
+        }
+      }
+      document.getElementById('calcResult').textContent = res;
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('clock').textContent = `${h}:${m}:${s}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function updateCountdown() {
+      const target = document.getElementById('targetDate').value;
+      if (!target) {
+        document.getElementById('countdownDisplay').textContent = '0 天';
+        return;
+      }
+      const today = new Date();
+      const end = new Date(target);
+      const diffTime = end - today;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      document.getElementById('countdownDisplay').textContent = diffDays > 0 ? `${diffDays} 天` : '已到期';
+    }
+    document.getElementById('targetDate').addEventListener('change', updateCountdown);
+
+    let scheduleItems = JSON.parse(localStorage.getItem('scheduleItems')) || [];
+    const scheduleList = document.getElementById('scheduleList');
+
+    function renderSchedule() {
+      scheduleList.innerHTML = '';
+      scheduleItems.slice().reverse().forEach((item, i) => {
+        const realIndex = scheduleItems.length - 1 - i;
+        const timeStr = item.time ? item.time.replace('T', ' ').slice(0, 16) : '';
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span class="schedule-time">${timeStr}</span>
+          <span class="schedule-text">${item.text}</span>
+          <button class="schedule-delete" onclick="deleteSchedule(${realIndex})">删除</button>
+        `;
+        scheduleList.appendChild(li);
+      });
+    }
+
+    function addScheduleFromInputs() {
+      const container = document.getElementById('scheduleInputs');
+      const timeVal = container.querySelector('.schedule-time-input').value;
+      const textVal = container.querySelector('.schedule-text-input').value.trim();
+      if (!textVal) return;
+      scheduleItems.push({ time: timeVal, text: textVal });
+      localStorage.setItem('scheduleItems', JSON.stringify(scheduleItems));
+      renderSchedule();
+      container.querySelector('.schedule-time-input').value = '';
+      container.querySelector('.schedule-text-input').value = '';
+    }
+
+    function deleteSchedule(index) {
+      scheduleItems.splice(index, 1);
+      localStorage.setItem('scheduleItems', JSON.stringify(scheduleItems));
+      renderSchedule();
+    }
+    renderSchedule();
+
+    function saveNote() {
+      const note = document.getElementById('noteInput').value;
+      localStorage.setItem('note', note);
+      document.getElementById('noteContent').textContent = note || '(空)';
+    }
+    document.getElementById('noteContent').textContent = localStorage.getItem('note') || '(空)';
+
+    function runSciCalc() {
+      const expr = document.getElementById('sciExpr').value;
+      try {
+        const result = eval(expr);
+        document.getElementById('sciResult').textContent = '结果: ' + result;
+      } catch(e) {
+        document.getElementById('sciResult').textContent = '表达式错误';
+      }
+    }
+
+    async function startPickColor() {
+      if (!window.EyeDropper) {
+        document.getElementById('pickedColor').textContent = '浏览器不支持取色';
+        return;
+      }
+      try {
+        const eyeDropper = new EyeDropper();
+        const result = await eyeDropper.open();
+        document.getElementById('pickedColor').innerHTML = `颜色: ${result.sRGBHex} <div style="width:20px;height:20px;background:${result.sRGBHex};border:1px solid #fff;margin:4px auto;"></div>`;
+      } catch(e) {
+        document.getElementById('pickedColor').textContent = '取消取色';
+      }
+    }
+
+    function showTechToolMenu() {
+      const out = document.getElementById('techToolOutput');
+      out.innerHTML = `
+        <div style="margin-bottom:6px;"><button onclick="runIpQuery()">查询本机IP</button></div>
+        <div style="margin-bottom:6px;"><button onclick="runBase64Encode()">Base64编码</button></div>
+        <div><button onclick="runJsonFormat()">JSON格式化</button></div>
+        <div id="techToolResult" style="margin-top:6px;word-break:break-all;"></div>
+      `;
+    }
+    async function runIpQuery() {
+      const res = await fetch('https://api.ipify.org?format=json');
+      const data = await res.json();
+      document.getElementById('techToolResult').textContent = '本机IP: ' + data.ip;
+    }
+    function runBase64Encode() {
+      const val = prompt('输入要编码的文本:');
+      if (val) {
+        const enc = btoa(unescape(encodeURIComponent(val)));
+        document.getElementById('techToolResult').textContent = 'Base64: ' + enc;
+      }
+    }
+    function runJsonFormat() {
+      const val = prompt('输入JSON字符串:');
+      if (val) {
+        try {
+          const obj = JSON.parse(val);
+          document.getElementById('techToolResult').textContent = '格式化结果:\n' + JSON.stringify(obj, null, 2);
+        } catch(e) {
+          document.getElementById('techToolResult').textContent = 'JSON解析错误';
+        }
+      }
+    }
+
+    let camStream = null;
+    async function startCameraTest() {
+      const video = document.getElementById('camVideo');
+      const info = document.getElementById('camInfo');
+      try {
+        camStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = camStream;
+        video.style.display = 'block';
+        const track = camStream.getVideoTracks()[0];
+        const settings = track.getSettings();
+        info.textContent = `分辨率: ${settings.width}x${settings.height}, 帧率: ${settings.frameRate || '未知'}`;
+      } catch(e) {
+        info.textContent = '无法打开摄像头';
+      }
+    }
+
+    initNavDots();
+  </script>
+</body>
+</html>
