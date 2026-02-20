@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <title>ly云手机 | 自定义背景版</title>
+  <title>ly云手机 | 多功能工具页</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
@@ -26,7 +26,7 @@
       position: absolute; inset: 0;
       display: flex; flex-direction: column;
       justify-content: flex-start; align-items: center;
-      padding: 60px 16px 30px;
+      padding: 40px 16px 30px;
       overflow-y: auto;
       opacity: 0; visibility: hidden;
       transition: opacity 0.8s ease, visibility 0.8s;
@@ -34,25 +34,13 @@
     }
     .section.active { opacity: 1; visibility: visible; }
     
-    .title-bar {
-      position: absolute; top: 0; left: 0; width: 100%;
-      padding: 18px 20px; display: flex; align-items: center;
-      justify-content: center; background: transparent; color: var(--color-text);
-      letter-spacing: 2px;
-    }
-    .title-bar .icon {
-      width: 22px; height: 22px; margin-right: 10px;
-      fill: var(--color-accent);
-    }
-    .title-bar .title-text {
-      font-size: 1.2rem; font-weight: 500;
-      text-transform: uppercase;
-    }
+    /* 修改点：完全移除了 .title-bar 相关的所有CSS样式 */
+    /* 所有特效（波浪线、按钮等）均被保留 */
 
     .content {
       width: 100%;
       max-width: 420px;
-      margin-top: 70px;
+      margin-top: 10px;
     }
 
     .notice {
@@ -258,16 +246,57 @@
       transition: opacity 0.2s, transform 0.2s;
     }
     .dot.active { opacity: 1; transform: scale(1.3); background: var(--color-accent); }
+
+    .legal-content {
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+    .legal-content h3 {
+      color: var(--color-accent);
+      margin-top: 24px;
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 6px;
+    }
+    .legal-content h3:first-child {
+      margin-top: 0;
+    }
+    .legal-content p {
+      margin-bottom: 12px;
+      color: var(--color-text);
+    }
+    .legal-content ul {
+      list-style: disc;
+      margin-left: 1.5em;
+      margin-bottom: 12px;
+    }
+    .legal-content li {
+      margin-bottom: 8px;
+    }
+    .back-to-home {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background: transparent;
+      color: var(--color-accent);
+      border: 1px solid var(--color-accent);
+      border-radius: 2px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+    .back-to-home:hover {
+      background: var(--color-accent);
+      color: #000;
+    }
   </style>
 </head>
 <body>
   <div class="page-container">
     <!-- 1. 云手机说明 -->
     <div class="section active" id="section1">
-      <div class="title-bar">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/></svg>
-        <span class="title-text">Ly 云手机</span>
-      </div>
+      <!-- 修改点：移除了顶部的 title-bar，但保留了所有内容特效 -->
       <div class="content">
         <div class="notice">
           <p>此网页为腾讯文档网页版，用于管理云手机使用状态。</p>
@@ -300,10 +329,7 @@
 
     <!-- 2. 网址导航 + 计算器 -->
     <div class="section" id="section2">
-      <div class="title-bar">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/></svg>
-        <span class="title-text">Ly 云手机</span>
-      </div>
+      <!-- 修改点：移除了顶部的 title-bar，但保留了所有内容特效 -->
       <div class="content">
         <h2 class="half-title" style="font-weight:400;letter-spacing:1px;margin-bottom:12px;">网址导航</h2>
         <div class="wave-underline">
@@ -328,7 +354,6 @@
               <a class="metal-btn" href="https://weixin.qq.com/" target="_blank">微</a>
               <a class="metal-btn" href="https://im.qq.com/" target="_blank">Q</a>
               <a class="metal-btn" href="https://browser.360.cn/se/" target="_blank">360</a>
-              <!-- 修改点：将向日葵的链接替换为ToDesk的下载链接 -->
               <a class="metal-btn" href="https://www.todesk.com/download.html" target="_blank">向</a>
             </div>
           </div>
@@ -374,10 +399,7 @@
 
     <!-- 3. 时钟 + 天气 + 工作清单 -->
     <div class="section" id="section3">
-      <div class="title-bar">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/></svg>
-        <span class="title-text">功能区</span>
-      </div>
+      <!-- 修改点：移除了顶部的 title-bar，但保留了所有内容特效 -->
       <div class="content">
         <div class="func-card">
           <div class="func-card-title">🕒 时钟 & 🌤️ 天气</div>
@@ -410,10 +432,7 @@
 
     <!-- 4. 倒计时 + 笔记 + 预留 -->
     <div class="section" id="section4">
-      <div class="title-bar">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/></svg>
-        <span class="title-text">功能区</span>
-      </div>
+      <!-- 修改点：移除了顶部的 title-bar，但保留了所有内容特效 -->
       <div class="content">
         <div class="func-card">
           <div class="func-card-title">⏳ 倒计时</div>
@@ -441,10 +460,7 @@
 
     <!-- 5. 扩展功能区 -->
     <div class="section" id="section5">
-      <div class="title-bar">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/></svg>
-        <span class="title-text">扩展功能区</span>
-      </div>
+      <!-- 修改点：移除了顶部的 title-bar，但保留了所有内容特效 -->
       <div class="content">
         <div class="extended-grid" id="extendedGrid5">
           <div class="ext-feature" data-tool="scientific-calc">
@@ -484,13 +500,62 @@
         </div>
       </div>
     </div>
+
+    <!-- 6. FAQ 帮助页面 -->
+    <div class="section" id="section6">
+      <!-- 修改点：移除了顶部的 title-bar，但保留了所有内容特效 -->
+      <div class="content legal-content">
+        <h3>1. 如何连接云手机？</h3>
+        <p>首先，请在“云手机说明”页面复制 ToDesk 的伙伴识别码和验证码。然后，在您的电脑或手机上安装并打开 ToDesk 客户端，输入识别码和验证码即可发起远程连接。</p>
+        
+        <h3>2. 计算器功能支持哪些运算？</h3>
+        <p>基础计算器支持加、减、乘、除四则运算。在“扩展功能区”的科学计算器中，您可以执行更复杂的数学运算，如三角函数 (sin, cos)、对数 (log) 和指数等。</p>
+        
+        <h3>3. 工作清单的数据会丢失吗？</h3>
+        <p>不会。您的工作清单数据会保存在浏览器的本地存储 (LocalStorage) 中。只要您不清除浏览器缓存，数据就会一直保留，即使关闭浏览器再重新打开也是如此。</p>
+        
+        <h3>4. 天气功能为什么显示“暂无天气数据”？</h3>
+        <p>当前版本的天气功能是一个占位符，需要接入第三方天气 API 才能显示真实数据。我们计划在未来的更新中完善此功能。</p>
+        
+        <h3>5. 如何反馈问题或建议？</h3>
+        <p>由于这是一个静态网页，暂时没有内置的反馈系统。您可以通过您获得此链接的渠道向我们反馈，我们会认真考虑每一条建议。</p>
+        
+        <a href="#" class="back-to-home" onclick="goToSection(0); return false;">← 返回首页</a>
+      </div>
+    </div>
+
+    <!-- 7. 隐私政策页面 -->
+    <div class="section" id="section7">
+      <!-- 修改点：移除了顶部的 title-bar，但保留了所有内容特效 -->
+      <div class="content legal-content">
+        <h3>1. 我们收集的信息</h3>
+        <p>本网页旨在提供便捷的工具服务。我们不会主动收集任何个人身份信息。您在“工作清单”和“笔记”中保存的内容，仅存储在您的本地浏览器中，不会被上传至任何服务器。</p>
+        
+        <h3>2. 本地数据存储</h3>
+        <p>为了提供“工作清单”和“笔记”的持久化功能，我们使用浏览器的 LocalStorage 技术。这些数据完全由您自己控制，您可以随时清除浏览器数据来删除它们。</p>
+        
+        <h3>3. 第三方链接</h3>
+        <p>本网页包含指向第三方网站（如 Microsoft, ToDesk, Bilibili 等）的链接。这些网站有其独立的隐私政策，我们不对它们的内容或数据处理方式负责。点击这些链接后，您将离开本网站。</p>
+        
+        <h3>4. Cookie 的使用</h3>
+        <p>本网站可能使用必要的 Cookie 来维护您的会话状态和页面导航功能。我们不使用 Cookie 进行广告跟踪或分析。</p>
+        
+        <h3>5. 政策的变更</h3>
+        <p>我们可能会不时更新本隐私政策。任何更改都会在页面上公布。建议您定期查看此页面以了解最新信息。</p>
+        
+        <h3>6. 联系我们</h3>
+        <p>如果您对本隐私政策有任何疑问，请通过您获取此网页的渠道与我们联系。</p>
+        
+        <a href="#" class="back-to-home" onclick="goToSection(0); return false;">← 返回首页</a>
+      </div>
+    </div>
   </div>
 
   <!-- 右侧导航点容器 -->
   <div class="nav-dots" id="navDots"></div>
 
   <script>
-    const basePages = 5;
+    const basePages = 7;
     let totalPages = basePages;
     let currentIndex = 0;
 
