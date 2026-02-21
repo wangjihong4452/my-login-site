@@ -534,27 +534,38 @@
       </div>
     </div>
 
-    <!-- 7. 隐私政策页面 -->
+    <!-- 7. 关于我 -->
     <div class="section" id="section7">
       <div class="content legal-content">
-        <h3>1. 我们收集的信息</h3>
-        <p>本网页旨在提供便捷的工具服务。我们不会主动收集任何个人身份信息。您在“工作清单”和“笔记”中保存的内容，仅存储在您的本地浏览器中，不会被上传至任何服务器。</p>
-        
-        <h3>2. 本地数据存储</h3>
-        <p>为了提供“工作清单”和“笔记”的持久化功能，我们使用浏览器的 LocalStorage 技术。这些数据完全由您自己控制，您可以随时清除浏览器数据来删除它们。</p>
-        
-        <h3>3. 第三方链接</h3>
-        <p>本网页包含指向第三方网站（如 Microsoft, 远程控制精灵官网, Bilibili 等）的链接。这些网站有其独立的隐私政策，我们不对它们的内容或数据处理方式负责。点击这些链接后，您将离开本网站。</p>
-        
-        <h3>4. Cookie 的使用</h3>
-        <p>本网站可能使用必要的 Cookie 来维护您的会话状态和页面导航功能。我们不使用 Cookie 进行广告跟踪或分析。</p>
-        
-        <h3>5. 政策的变更</h3>
-        <p>我们可能会不时更新本隐私政策。任何更改都会在页面上公布。建议您定期查看此页面以了解最新信息。</p>
-        
-        <h3>6. 联系我们</h3>
-        <p>如果您对本隐私政策有任何疑问，请通过您获取此网页的渠道与我们联系。</p>
-        
+        <h3>关于我</h3>
+        <p>欢迎来到 ly云手机 站点。我是本站的创建与维护者，热爱技术、工具分享与效率提升。</p>
+        <p>本网站集合了多种实用小工具，方便日常使用与远程设备管理。我希望通过这个平台，让复杂的操作变得简单，让工具真正服务于人。</p>
+        <p>如果你喜欢这里的内容，欢迎常来看看，也欢迎通过联系方式页面与我交流。</p>
+        <a href="#" class="back-to-home" onclick="goToSection(0); return false;">← 返回首页</a>
+      </div>
+    </div>
+
+    <!-- 8. 联系方式 -->
+    <div class="section" id="section8">
+      <div class="content legal-content">
+        <h3>联系方式</h3>
+        <p>您可以通过以下方式联系我：</p>
+        <ul>
+          <li>邮箱：<a href="mailto:a123127318@foxmail.com">a123127318@foxmail.com</a></li>
+        </ul>
+        <p>无论是建议、合作还是问题反馈，我都会尽快回复。</p>
+        <a href="#" class="back-to-home" onclick="goToSection(0); return false;">← 返回首页</a>
+      </div>
+    </div>
+
+    <!-- 9. 隐私政策 (全新原创版本) -->
+    <div class="section" id="section9">
+      <div class="content legal-content">
+        <h3>隐私政策</h3>
+        <p>本网站（ly云手机）尊重并保护您的个人隐私。我们承诺不会收集任何可直接识别您个人身份的信息，除非您主动通过联系方式页面与我们沟通。</p>
+        <p>本网站使用本地存储（LocalStorage）来保存您的待办事项和笔记，这些数据仅存在于您的设备浏览器中，不会被上传至任何服务器。</p>
+        <p>网站可能使用第三方统计服务（如访问量分析），但这些服务不会获取您的个人信息。</p>
+        <p>如您对本隐私政策有任何疑问，请通过 <a href="mailto:a123127318@foxmail.com">a123127318@foxmail.com</a> 与我们联系。</p>
         <a href="#" class="back-to-home" onclick="goToSection(0); return false;">← 返回首页</a>
       </div>
     </div>
@@ -564,7 +575,7 @@
   <div class="nav-dots" id="navDots"></div>
 
   <script>
-    const basePages = 7;
+    const basePages = 9; // 现在有 9 个 section
     let totalPages = basePages;
     let currentIndex = 0;
 
@@ -698,7 +709,7 @@
       try {
         const result = eval(expr);
         document.getElementById('sciResult').textContent = '结果: ' + result;
-      } catch(e) {
+
         document.getElementById('sciResult').textContent = '表达式错误';
       }
     }
@@ -769,4 +780,3 @@
     initNavDots();
   </script>
 </body>
-</html>
